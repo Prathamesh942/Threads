@@ -11,14 +11,10 @@ const UserSchema = new Schema(
       lowercase: true,
       trim: true,
       index: true,
-      validate: {
-        validator: (username) => User.doesNotExist({ username }),
-        message: "Username already exists",
-      },
     },
     name: {
       type: String,
-      required: true,
+      default: "",
     },
     email: {
       type: String,
@@ -26,10 +22,10 @@ const UserSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      validate: {
-        validator: (email) => User.doesNotExist({ email }),
-        message: "Email already exists",
-      },
+      // validate: {
+      //   validator: (email) => User.doesNotExist({ email }),
+      //   message: "Email already exists",
+      // },
     },
     password: {
       type: String,

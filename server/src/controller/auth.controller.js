@@ -5,9 +5,9 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { uploadOnCloudinary } from "..//utils/cloudinary.js";
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { name, username, email, password } = req.body;
   console.log(req.body);
-  if ([username, email, password].some((field) => field?.trim() === "")) {
+  if ([name, username, email, password].some((field) => field?.trim() === "")) {
     throw new ApiError(400, "All fields are required");
   }
 
@@ -25,6 +25,7 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   const user = await User.create({
+    name,
     email,
     username,
     password,

@@ -34,7 +34,7 @@ const updateuser = asyncHandler(async (req, res) => {
   ).select("-password");
 
   if (!user) {
-    return res.status(404).json(new ApiError(404, "User not found"));
+    throw new ApiError(404, "User not found");
   }
 
   return res
@@ -51,7 +51,7 @@ const followuser = asyncHandler(async (req, res) => {
   );
   //   console.log(userToFollow);
   if (!userToFollow) {
-    return res.status(404).json(new ApiError(404, "User not found"));
+    throw new ApiError(404, "User not found");
   }
   if (!userToFollow.followers.includes(me._id)) {
     userToFollow.followers.push(me._id);

@@ -6,7 +6,7 @@ import { uploadOnCloudinary } from "..//utils/cloudinary.js";
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, username, email, password } = req.body;
-  console.log(req.body);
+  console.log("received", req.body);
   if ([name, username, email, password].some((field) => field?.trim() === "")) {
     throw new ApiError(400, "All fields are required");
   }
@@ -17,19 +17,19 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(409, "User already exists");
   }
 
-  const profileLocalPath = req.files?.profile[0]?.path;
-  const profileImg = await uploadOnCloudinary(profileLocalPath);
+  // const profileLocalPath = req.files?.profile[0].path;
+  // const profileImg = await uploadOnCloudinary(profileLocalPath);
 
-  if (!profileImg) {
-    throw new ApiError(400, "Profile image required");
-  }
+  // if (!profileImg) {
+  //   throw new ApiError(400, "Profile image required");
+  // }
 
   const user = await User.create({
     name,
     email,
     username,
     password,
-    profileImg: profileImg.url,
+    // profileImg: profileImg.url,
   });
 
   const createdUser = await User.findById(user._id).select("-password");

@@ -9,6 +9,8 @@ import {
   getUserPosts,
   createComment,
   getComments,
+  likeUnlikePost,
+  getLikes,
 } from "../controller/post.controller.js";
 
 const router = Router();
@@ -20,5 +22,7 @@ router.route("/:postId").delete(verifyJwt, deletePost);
 router.route("/:username/posts").get(getUserPosts);
 router.route("/:postId/comments").post(verifyJwt, createComment);
 router.route("/:postId/comments").get(getComments);
+router.route("/:postId/likes").post(verifyJwt, likeUnlikePost);
+router.route("/:postId/likes").get(getLikes);
 
 export default router;

@@ -145,6 +145,38 @@ const getComments = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, comments, "Comments fetched"));
 });
 
+const likeUnlikePost = asyncHandler(async (req, res) => {
+  const postId = req.params.postId;
+  const me = req.user;
+
+  const post = await Post.findById(postId);
+
+  if (!post) {
+    throw new ApiError(404, "Post not found");
+  }
+
+  if (post.likes.includes(me._id)) {
+    post.likes = post.likes.filter((id) => id.toString() !== me._id.toString());
+    await post.save();
+  } else {
+    post.likes.push(me._id);
+    await post.save();
+  }
+
+  return res.status(200).json(new ApiResponse(200, post, "post liked"));
+});
+
+const getLikes = asyncHandler(async (req, res) => {
+  const postId = req.params.postId;
+  const post = await Post.findById(postId);
+  if (!post) {
+    throw new ApiError(404, "Post not found");
+  }
+  const likesCount = post.likes.length;
+
+  return res.status(200).json(new ApiResponse(200, likesCount, "likes count"));
+});
+
 export {
   createPost,
   getPosts,
@@ -153,4 +185,6 @@ export {
   getUserPosts,
   createComment,
   getComments,
+  likeUnlikePost,
+  getLikes,
 };

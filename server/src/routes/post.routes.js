@@ -7,6 +7,8 @@ import {
   updatePost,
   deletePost,
   getUserPosts,
+  createComment,
+  getComments,
 } from "../controller/post.controller.js";
 
 const router = Router();
@@ -16,5 +18,7 @@ router.route("/").get(getPosts);
 router.route("/:postId").put(verifyJwt, updatePost);
 router.route("/:postId").delete(verifyJwt, deletePost);
 router.route("/:username/posts").get(getUserPosts);
+router.route("/:postId/comments").post(verifyJwt, createComment);
+router.route("/:postId/comments").get(getComments);
 
 export default router;

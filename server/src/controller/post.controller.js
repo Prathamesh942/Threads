@@ -3,6 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { Post } from "../models/post.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
+import { Comment } from "../models/comment.model.js";
 
 const createPost = asyncHandler(async (req, res) => {
   const me = req.user;
@@ -100,4 +101,56 @@ const getUserPosts = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, posts, "Posts fetched"));
 });
-export { createPost, getPosts, updatePost, deletePost, getUserPosts };
+
+const createComment = asyncHandler(async (req, res) => {
+  const postId = req.params.postId;
+  const content = req.body.content;
+  const comment = await Comment.create({
+    user: req.user._id,
+    post: postId,
+    content,
+  });
+
+  if (!comment) {
+    return new ApiError(401, "comment failed");
+  }
+
+  console.log(comment);
+
+  const post = await Post.findById(postId);
+
+  if (!post) {
+    throw new ApiError(404, "Post not found");
+  }
+
+  post.comments.push(comment._id);
+
+  await post.save();
+
+  return res.status(200).json(new ApiResponse(200, post, "Commented"));
+});
+
+const getComments = asyncHandler(async (req, res) => {
+  const postId = req.params.postId;
+  const comments = await Comment.find({ post: postId })
+    .populate("user", "username profileImg")
+    .sort({ createdAt: -1 });
+
+  if (!comments) {
+    throw new ApiError(404, "Comments not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, comments, "Comments fetched"));
+});
+
+export {
+  createPost,
+  getPosts,
+  updatePost,
+  deletePost,
+  getUserPosts,
+  createComment,
+  getComments,
+};

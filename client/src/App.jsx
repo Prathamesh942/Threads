@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Authentication from "./pages/Authentication";
 import axios from "axios";
 import UpdateProfile from "./component/UpdateProfile";
+import New from "./pages/New";
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/updateprofile",
     element: <UpdateProfile />,
+  },
+  {
+    path: "/new",
+    element: <New />,
   },
 ]);
 

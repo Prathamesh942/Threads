@@ -177,6 +177,18 @@ const getLikes = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, likesCount, "likes count"));
 });
 
+const getPost = asyncHandler(async (req, res) => {
+  const postId = req.params.postId;
+  const post = await Post.findById(postId).populate(
+    "user",
+    "username profileImg"
+  );
+  if (!post) {
+    throw new ApiError(404, "Post not found");
+  }
+  return res.status(200).json(new ApiResponse(200, post, "post"));
+});
+
 export {
   createPost,
   getPosts,
@@ -187,4 +199,5 @@ export {
   getComments,
   likeUnlikePost,
   getLikes,
+  getPost,
 };

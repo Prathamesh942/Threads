@@ -11,12 +11,14 @@ import {
   getComments,
   likeUnlikePost,
   getLikes,
+  getPost,
 } from "../controller/post.controller.js";
 
 const router = Router();
 
 router.route("/").post(verifyJwt, createPost);
 router.route("/").get(getPosts);
+router.route("/:postId").get(getPost);
 router.route("/:postId").put(verifyJwt, updatePost);
 router.route("/:postId").delete(verifyJwt, deletePost);
 router.route("/:username/posts").get(getUserPosts);

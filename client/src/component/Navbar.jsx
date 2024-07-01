@@ -2,14 +2,15 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { isLoggedIn, logout, user } = useAuth();
-  const token = Cookies.get("accessToken");
-  console.log(token);
 
   const handleLogout = async () => {
-    await axios.post("/api/v1/auth/logout");
+    try {
+      await axios.post("/api/v1/auth/logout");
+    } catch (error) {}
     logout();
   };
   return (
@@ -21,7 +22,6 @@ const Navbar = () => {
         <li>NEW</li>
         <li>ACTIVITY</li>
         <li>PROFILE</li>
-        {isLoggedIn && user.name}
       </ul>
       {isLoggedIn ? (
         <button
@@ -31,9 +31,11 @@ const Navbar = () => {
           Log out
         </button>
       ) : (
-        <button className=" bg-white rounded-lg px-2 py-1 text-black">
-          Log in
-        </button>
+        <Link to={"/auth"}>
+          <button className=" bg-white rounded-lg px-2 py-1 text-black">
+            Log in
+          </button>
+        </Link>
       )}
     </div>
   );

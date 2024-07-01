@@ -2,6 +2,7 @@ import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { uploadOnCloudinary } from "..//utils/cloudinary.js";
 
 const getuser = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
@@ -27,6 +28,14 @@ const updateuser = asyncHandler(async (req, res) => {
   console.log(req.body);
 
   console.log(userId);
+  let profileImg =
+    "https://i.pinimg.com/474x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg";
+  if (req.files.profile) {
+    const profileLocalPath = req.files?.profile[0].path;
+    profileImg = await uploadOnCloudinary(profileLocalPath);
+  }
+
+  updates.profileImg = profileImg.url;
   const user = await User.findOneAndUpdate(
     { username: userId },
     { $set: updates },

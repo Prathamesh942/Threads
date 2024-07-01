@@ -17,13 +17,6 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(409, "User already exists");
   }
 
-  // const profileLocalPath = req.files?.profile[0].path;
-  // const profileImg = await uploadOnCloudinary(profileLocalPath);
-
-  // if (!profileImg) {
-  //   throw new ApiError(400, "Profile image required");
-  // }
-
   const user = await User.create({
     name,
     email,

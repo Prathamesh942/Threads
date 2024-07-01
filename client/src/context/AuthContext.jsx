@@ -12,8 +12,23 @@ export const AuthProvider = ({ children }) => {
     const storedUser = localStorage.getItem("twineuser");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
-      setIsLoggedIn(true);
     }
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get("/check-auth", {
+          withCredentials: true,
+        });
+        if (response.data.loggedIn) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error checking auth:", error);
+        setIsLoggedIn(false);
+      }
+    };
+    checkAuth();
   }, []);
 
   const login = (userData) => {

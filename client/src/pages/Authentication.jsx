@@ -12,6 +12,7 @@ const Authentication = () => {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showUpdate, setShowUpdate] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const Authentication = () => {
       console.log(accessToken, user);
       setLoading(false);
       login(user);
-      navigate("/");
+      !showUpdate ? navigate("/") : navigate("/updateprofile");
     } catch (error) {
       setLoading(false);
       setError("Something went wrong, try again");
@@ -53,9 +54,9 @@ const Authentication = () => {
         email,
         password,
       });
-      console.log(response);
       setLoading(false);
       setHaveAccount(true);
+      setShowUpdate(true);
     } catch (error) {
       setLoading(false);
       setError("Something went wrong, try again");
@@ -64,7 +65,7 @@ const Authentication = () => {
   };
 
   return (
-    <div className=" w-[screen] h-screen bg-zinc-950 text-white flex justify-center items-center">
+    <div className=" w-[screen] h-screen bg-zinc-950 text-white flex justify-center items-center ">
       <img
         className=" absolute top-0 h-auto object-contain twinebg"
         src="./assets/Twine.png"
@@ -81,49 +82,55 @@ const Authentication = () => {
             Register
           </h2>
         )}
+
         <div className=" flex flex-col gap-2 w-[100%]">
-          {!haveAccount ? (
+          {
             <>
+              {!haveAccount ? (
+                <>
+                  <input
+                    onChange={(e) => {
+                      setName(e.target.value);
+                    }}
+                    type="text"
+                    placeholder="Name"
+                    className=" w-[screen] py-4 px-4 rounded-lg bg-zinc-800 "
+                  />
+                  <input
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                    }}
+                    type="text"
+                    placeholder="Email"
+                    className=" w-[screen] py-4 px-4 rounded-lg bg-zinc-800"
+                  />
+                </>
+              ) : (
+                <></>
+              )}
               <input
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setUsername(e.target.value);
                 }}
-                type="text"
-                placeholder="Name"
                 className=" w-[screen] py-4 px-4 rounded-lg bg-zinc-800 "
+                type="text"
+                placeholder="Username"
               />
               <input
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setPassword(e.target.value);
                 }}
-                type="text"
-                placeholder="Email"
                 className=" w-[screen] py-4 px-4 rounded-lg bg-zinc-800"
+                type="text"
+                placeholder="Password"
               />
             </>
-          ) : (
-            <></>
-          )}
-          <input
-            onChange={(e) => {
-              setUsername(e.target.value);
-            }}
-            className=" w-[screen] py-4 px-4 rounded-lg bg-zinc-800 "
-            type="text"
-            placeholder="Username"
-          />
-          <input
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            className=" w-[screen] py-4 px-4 rounded-lg bg-zinc-800"
-            type="text"
-            placeholder="Password"
-          />
+          }
+
           {haveAccount ? (
             <>
               <button
-                className=" w-[screen] py-4 rounded-md bg-white text-zinc-700 font-medium  justify-center items-center"
+                className=" w-[screen] py-4 rounded-md bg-white text-zinc-700 font-medium flex justify-center items-center"
                 onClick={handleLogin}
               >
                 {loading ? (

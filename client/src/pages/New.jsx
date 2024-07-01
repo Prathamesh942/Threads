@@ -69,7 +69,6 @@ const New = ({ username, profileImg, close }) => {
   username = "angela";
   const [thread, setThread] = useState([]);
   const [count, setCount] = useState(1);
-  console.log(thread);
 
   const postThread = async () => {
     try {

@@ -14,9 +14,9 @@ const Navbar = () => {
     logout();
   };
   return (
-    <div className=" w-screen px-[5vw] flex justify-between items-center h-[100px]">
+    <div className=" py-[5vh] flex flex-col justify-between  items-center h-screen w-[100px] fixed top-0">
       <div className="">LOGO</div>
-      <ul className=" flex gap-[4vw] max-w-[400px] justify-center">
+      <ul className=" flex flex-col gap-[4vh] max-h-[400px] justify-center">
         <li>HOME</li>
         <li>SEARCH</li>
         <li>NEW</li>

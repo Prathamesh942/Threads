@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 const AuthContext = createContext();
 
@@ -15,9 +16,10 @@ export const AuthProvider = ({ children }) => {
     }
     const checkAuth = async () => {
       try {
-        const response = await axios.get("/check-auth", {
+        const response = await axios.get("/api/v1/auth/checkauth", {
           withCredentials: true,
         });
+        console.log("check", response.data);
         if (response.data.loggedIn) {
           setIsLoggedIn(true);
         } else {

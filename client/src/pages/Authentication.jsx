@@ -14,8 +14,12 @@ const Authentication = () => {
   const [password, setPassword] = useState("");
   const [showUpdate, setShowUpdate] = useState(false);
 
-  const { login } = useAuth();
+  const { login, isLoggedIn } = useAuth();
   const navigate = useNavigate();
+  console.log(isLoggedIn);
+  if (isLoggedIn) {
+    navigate("/");
+  }
 
   const handleLogin = async () => {
     try {

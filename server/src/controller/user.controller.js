@@ -9,7 +9,7 @@ const getuser = asyncHandler(async (req, res) => {
   console.log(req.params);
   console.log(userId);
   const user = await User.findOne({ username: userId }).select(
-    "-password -_id -email"
+    "-password -email"
   );
   if (!user) {
     return res.status(404).json(new ApiError(404, "User not found"));
@@ -31,11 +31,14 @@ const updateuser = asyncHandler(async (req, res) => {
   let profileImg =
     "https://i.pinimg.com/474x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg";
   if (req.files.profile) {
+    // console.log(req.files.profile);
     const profileLocalPath = req.files?.profile[0].path;
     profileImg = await uploadOnCloudinary(profileLocalPath);
+    console.log(profileImg);
   }
 
   updates.profileImg = profileImg.url;
+  console.log("updated", updates);
   const user = await User.findOneAndUpdate(
     { username: userId },
     { $set: updates },

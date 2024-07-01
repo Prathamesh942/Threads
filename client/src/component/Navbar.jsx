@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const { isLoggedIn, logout, user } = useAuth();
 
+  console.log(user);
+
   const handleLogout = async () => {
     try {
       await axios.post("/api/v1/auth/logout");

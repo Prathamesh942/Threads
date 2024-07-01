@@ -27,10 +27,14 @@ const Single = ({
     autoGrow(e.target);
   };
   return (
-    <div className=" flex justify-between items-center py-4 w-[100%] ">
+    <div className=" flex justify-between items-center py-4 w-[100%]">
       <div className=" flex w-[100%]">
         <div className=" h-[100%] flex flex-col items-center gap-1">
-          <img src={profileImg} alt="" className=" rounded-full size-10" />
+          <img
+            src={profileImg}
+            alt=""
+            className=" rounded-full size-10 min-h-10 min-w-10 aspect-square object-cover"
+          />
           <div className=" h-[100%] w-[2px] rounded-full bg-zinc-700"></div>
         </div>
         <div className=" flex flex-col gap-2  w-[100%] px-6 ">
@@ -65,8 +69,8 @@ const Single = ({
   );
 };
 
-const New = ({ username, profileImg, close }) => {
-  username = "angela";
+const New = ({ username, profileImg, close, getPosts }) => {
+  console.log(username, profileImg);
   const [thread, setThread] = useState([]);
   const [count, setCount] = useState(1);
 
@@ -75,6 +79,7 @@ const New = ({ username, profileImg, close }) => {
       const response = await axios.post("api/v1/posts", { content: thread });
       console.log(response);
       close(false);
+      getPosts();
     } catch (error) {
       console.log(error);
     }
@@ -82,7 +87,7 @@ const New = ({ username, profileImg, close }) => {
 
   return (
     <div
-      className=" w-screen h-screen flex justify-center items-center gap-4   text-white flex-col bg-[rgba(0,0,0,0.5)] absolute top-0"
+      className=" w-[100%] h-screen flex justify-center items-center gap-4   text-white flex-col bg-[rgba(0,0,0,0.7)] absolute top-0 z-10"
       onClick={() => {
         close(false);
       }}
@@ -116,7 +121,11 @@ const New = ({ username, profileImg, close }) => {
         <div className=" w-[100%] flex items-center justify-between gap-4">
           <div className=" flex items-center">
             <div className=" size-10 flex justify-center items-center">
-              <img src={profileImg} alt="" className=" rounded-full size-5" />
+              <img
+                src={profileImg}
+                alt=""
+                className=" rounded-full size-5 aspect-square"
+              />
             </div>
             <h3
               className=" text-zinc-700 px-6"

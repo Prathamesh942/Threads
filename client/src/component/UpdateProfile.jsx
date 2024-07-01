@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 const UpdateProfile = () => {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const [bio, setBio] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,6 +31,7 @@ const UpdateProfile = () => {
           },
         }
       );
+      login(response.data.data);
       setLoading(false);
       navigate("/");
       console.log(response.data);

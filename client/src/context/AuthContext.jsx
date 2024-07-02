@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
       }
     };
     checkAuth();
-  }, []);
+  }, [isLoggedIn]);
 
   const login = (userData) => {
     setIsLoggedIn(true);

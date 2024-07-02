@@ -124,7 +124,7 @@ const New = ({ username, profileImg, close, getPosts }) => {
               <img
                 src={profileImg}
                 alt=""
-                className=" rounded-full size-5 aspect-square"
+                className=" rounded-full size-5 aspect-square object-cover"
               />
             </div>
             <h3

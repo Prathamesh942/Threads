@@ -5,42 +5,12 @@ import axios from "axios";
 import Thread from "../component/Thread";
 import { useAuth } from "../context/AuthContext";
 import defaultImg from "../constant.js";
+import "../App.css";
 
 const Home = () => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("twineuser"))?.data?.data
-  );
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, logout, user } = useAuth();
   const [newPost, setNewPost] = useState(false);
   const [thread, setThread] = useState([]);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const response = await axios.get("/api/v1/auth/checkauth", {
-          withCredentials: true,
-        });
-        console.log(response);
-        if (response.data.loggedIn) {
-          const storedUser = localStorage.getItem("twineuser");
-          const parsedUser = JSON.parse(storedUser);
-          console.log(parsedUser);
-          setUser(
-            await axios.get(`/api/v1/users/${parsedUser.username}
-`)
-          );
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Error checking auth:", error);
-        setUser(null);
-      }
-    };
-    checkAuth();
-  }, []);
-
-  console.log(user);
 
   const getPosts = async () => {
     try {
@@ -54,7 +24,6 @@ const Home = () => {
   const makeLike = async (postId) => {
     await axios.post(`/api/v1/posts/${postId}/likes`);
     const response = await axios.get(`/api/v1/posts/${postId}`);
-    console.log(response.data.data);
     setThread((prevThread) =>
       prevThread.map((post) =>
         post._id === postId ? response.data.data : post
@@ -65,6 +34,13 @@ const Home = () => {
   const makeComment = async (postId, content) => {
     await axios.post(`/api/v1/posts/${postId}/comments`, { content });
     getPosts();
+  };
+
+  const deleteThread = async (threadId) => {
+    await axios.delete(`/api/v1/posts/${threadId}`);
+    setThread((prevThread) =>
+      prevThread.filter((post) => post._id != threadId)
+    );
   };
 
   useEffect(() => {
@@ -80,37 +56,39 @@ const Home = () => {
           getPosts={getPosts}
         />
       )}
-      <Navbar />
       <div className=" flex justify-center">
-        <div className=" w-[40vw] flex flex-col bg-zinc-900  rounded-2xl">
-          {isLoggedIn && (
-            <div className=" w-[100%]  px-6 border-b border-zinc-700 flex py-6 items-center">
-              <img
-                className=" w-10 h-10 object-cover rounded-full"
-                src={user?.data?.data?.profileImg || defaultImg}
-                alt=""
-              />
-              <div
-                className=" flex flex-col gap-4 px-4 text-zinc-400"
-                onClick={() => {
-                  setNewPost(true);
-                }}
-              >
-                Start Twine...
+        <div className=" w-[100vw] rounded-2xl h-screen flex flex-col overflow-scroll fixed hide-scrollbar items-center">
+          <div className=" w-[40vw] flex flex-col bg-zinc-900  rounded-2xl pb-10 relative">
+            {isLoggedIn && (
+              <div className=" w-[100%]  px-6 border-b border-zinc-700 flex py-6 items-center sticky bg-zinc-900 top-0 rounded-md z-10">
+                <img
+                  className=" w-10 h-10 object-cover rounded-full"
+                  src={user?.data?.data?.profileImg || defaultImg}
+                  alt=""
+                />
+                <div
+                  className=" flex flex-col gap-4 px-4 text-zinc-400"
+                  onClick={() => {
+                    setNewPost(true);
+                  }}
+                >
+                  Start Twine...
+                </div>
               </div>
-            </div>
-          )}
-          {thread.map((thread) => {
-            console.log(user);
-            return (
-              <Thread
-                thread={thread}
-                like={makeLike}
-                comment={makeComment}
-                userId={user.data.data._id}
-              />
-            );
-          })}
+            )}
+            {thread.map((thread) => {
+              console.log(user);
+              return (
+                <Thread
+                  thread={thread}
+                  like={makeLike}
+                  comment={makeComment}
+                  userId={user?.data?.data?._id}
+                  deleteThread={deleteThread}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

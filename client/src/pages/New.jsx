@@ -69,15 +69,23 @@ const Single = ({
   );
 };
 
-const New = ({ username, profileImg, close, getPosts }) => {
-  console.log(username, profileImg);
-  const [thread, setThread] = useState([]);
-  const [count, setCount] = useState(1);
+const New = ({
+  username,
+  profileImg,
+  close,
+  getPosts,
+  threadOld = [],
+  countOld = 1,
+  update,
+  updateThread,
+  threadId,
+}) => {
+  const [thread, setThread] = useState(threadOld);
+  const [count, setCount] = useState(countOld);
 
   const postThread = async () => {
     try {
       const response = await axios.post("api/v1/posts", { content: thread });
-      console.log(response);
       close(false);
       getPosts();
     } catch (error) {
@@ -108,6 +116,7 @@ const New = ({ username, profileImg, close, getPosts }) => {
         {new Array(count).fill(0).map((num, index) => {
           return (
             <Single
+              key={index}
               username={username}
               profileImg={profileImg}
               index={index}
@@ -127,6 +136,7 @@ const New = ({ username, profileImg, close, getPosts }) => {
                 className=" rounded-full size-5 aspect-square object-cover"
               />
             </div>
+
             <h3
               className=" text-zinc-700 px-6"
               onClick={() => setCount(count + 1)}
@@ -136,7 +146,18 @@ const New = ({ username, profileImg, close, getPosts }) => {
           </div>
         </div>
         <div className=" w-[100%] pt-8 flex justify-end">
-          <button onClick={postThread}>Post</button>
+          {update ? (
+            <button
+              onClick={() => {
+                updateThread(threadId, thread);
+                close(false);
+              }}
+            >
+              Save
+            </button>
+          ) : (
+            <button onClick={postThread}>Post</button>
+          )}
         </div>
       </div>
     </div>

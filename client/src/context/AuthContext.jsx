@@ -17,12 +17,10 @@ export const AuthProvider = ({ children }) => {
         const response = await axios.get("/api/v1/auth/checkauth", {
           withCredentials: true,
         });
-        console.log(response);
         if (response.data.loggedIn) {
           setIsLoggedIn(true);
           const storedUser = localStorage.getItem("twineuser");
           const parsedUser = JSON.parse(storedUser);
-          console.log(parsedUser);
           setUser(
             await axios.get(`/api/v1/users/${parsedUser.username}
 `)
@@ -51,8 +49,6 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     localStorage.removeItem("twineuser");
   };
-
-  console.log(user, isLoggedIn);
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout, user }}>

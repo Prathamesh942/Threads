@@ -43,6 +43,16 @@ const Home = () => {
     );
   };
 
+  const updateThread = async (threadId, content) => {
+    try {
+      await axios.put(`/api/v1/posts/${threadId}`, { content });
+      const response = await axios.get("/api/v1/posts");
+      setThread(response.data.data.posts);
+    } catch (error) {
+      console.error("Error updating thread:", error);
+    }
+  };
+
   useEffect(() => {
     getPosts();
   }, []);
@@ -76,15 +86,16 @@ const Home = () => {
                 </div>
               </div>
             )}
-            {thread.map((thread) => {
-              console.log(user);
+            {thread.map((thread, index) => {
               return (
                 <Thread
+                  key={index}
                   thread={thread}
                   like={makeLike}
                   comment={makeComment}
                   userId={user?.data?.data?._id}
                   deleteThread={deleteThread}
+                  updateThread={updateThread}
                 />
               );
             })}

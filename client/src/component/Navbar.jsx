@@ -8,8 +8,6 @@ import defaultImg from "../constant.js";
 const Navbar = () => {
   const { isLoggedIn, logout, user } = useAuth();
 
-  console.log(user);
-
   const handleLogout = async () => {
     try {
       await axios.post("/api/v1/auth/logout");
@@ -18,34 +16,36 @@ const Navbar = () => {
   };
   return (
     <div className=" py-[5vh] flex flex-col justify-between  items-center h-screen w-[100px] fixed top-0 z-10">
-      <div className=" size-14 cursor-pointer">
-        <Link to={"/"}>
+      <Link to={"/"}>
+        <div className=" size-14 cursor-pointer">
           <img
             className=" hover:scale-105"
             src="./assets/twinelogo.png"
             alt=""
           />
-        </Link>
-      </div>
+        </div>
+      </Link>
       <ul className=" flex flex-col gap-[4vh] max-h-[400px] justify-center items-center">
-        <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
-          <Link to={"/"}>
+        <Link to={"/"}>
+          <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
             <img src="./assets/home.svg" alt="" />
-          </Link>
-        </li>
+          </li>
+        </Link>
         <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
           <img src="./assets/search.svg" alt="" />
         </li>
         <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
           <img src="./assets/heart.svg" alt="" />
         </li>
-        <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
-          <img
-            className=" rounded-full size-8 object-cover"
-            src={user?.data?.data?.profileImg || defaultImg}
-            alt=""
-          />
-        </li>
+        <Link to={`/${user?.data?.data?.username}`}>
+          <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
+            <img
+              className=" rounded-full size-8 object-cover"
+              src={user?.data?.data?.profileImg || defaultImg}
+              alt=""
+            />
+          </li>
+        </Link>
       </ul>
 
       {isLoggedIn ? (

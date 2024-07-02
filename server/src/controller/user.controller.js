@@ -28,16 +28,14 @@ const updateuser = asyncHandler(async (req, res) => {
   console.log(req.body);
 
   console.log(userId);
-  let profileImg =
-    "https://i.pinimg.com/474x/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg";
-  if (req.files.profile) {
+  if (req.files?.profile) {
     // console.log(req.files.profile);
     const profileLocalPath = req.files?.profile[0].path;
     profileImg = await uploadOnCloudinary(profileLocalPath);
     console.log(profileImg);
+    updates.profileImg = profileImg.url;
   }
 
-  updates.profileImg = profileImg.url;
   console.log("updated", updates);
   const user = await User.findOneAndUpdate(
     { username: userId },
@@ -68,6 +66,11 @@ const followuser = asyncHandler(async (req, res) => {
   if (!userToFollow.followers.includes(me._id)) {
     userToFollow.followers.push(me._id);
     await userToFollow.save();
+  } else {
+    userToFollow.followers = userToFollow.followers.filter(
+      (fid) => !fid.equals(me._id)
+    );
+    await userToFollow.save();
   }
 
   console.log(me.following);
@@ -75,6 +78,9 @@ const followuser = asyncHandler(async (req, res) => {
   if (!me.following.includes(userToFollow._id)) {
     me.following.push(userToFollow._id);
     await me.save();
+  } else {
+    me.following = me.following.filter((fid) => !fid.equals(me._id));
+    await userToFollow.save();
   }
 
   res.status(200).json(new ApiResponse(200, me, "Followed user"));

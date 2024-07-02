@@ -1,24 +1,48 @@
 import React, { useEffect, useState } from "react";
 import defaultImg from "../constant.js";
 import { Link } from "react-router-dom";
+import New from "../pages/New.jsx";
 
-const Thread = ({ thread, like, comment, userId, deleteThread }) => {
-  const profileImg = thread.user.profileImg || defaultImg;
-  const username = thread.user.username;
-  const content = thread.content;
+const Thread = ({
+  thread,
+  like,
+  comment,
+  userId,
+  deleteThread,
+  updateThread,
+}) => {
+  const profileImg = thread?.user?.profileImg || defaultImg;
+  const username = thread?.user?.username;
+  const content = thread?.content;
   const [liked, setLiked] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  console.log(thread, userId);
+  const [editMode, setEditMode] = useState(false);
   useEffect(() => {
-    for (let userLiked of thread.likes) {
-      console.log(userLiked, userId);
-      if (userLiked == userId) {
-        setLiked(true);
-        return;
+    if (thread?.likes) {
+      for (let userLiked of thread?.likes) {
+        if (userLiked == userId) {
+          setLiked(true);
+          return;
+        }
       }
     }
     setLiked(false);
   });
+
+  if (editMode) {
+    return (
+      <New
+        username={thread.user?.username}
+        close={setEditMode}
+        profileImg={thread?.user?.profileImg || defaultImg}
+        threadOld={thread.content}
+        countOld={thread.content.length}
+        update={true}
+        updateThread={updateThread}
+        threadId={thread._id}
+      />
+    );
+  }
   return (
     <div className=" w-[100%]  px-6 border-b border-zinc-700 flex py-6">
       <img
@@ -51,16 +75,22 @@ const Thread = ({ thread, like, comment, userId, deleteThread }) => {
                 />
               )}
               {showMore && (
-                <div
-                  className=" absolute top-6 bg-zinc-800 p-4 rounded-lg cursor-pointer"
-                  onClick={() => {
-                    deleteThread(thread._id);
-                    setShowMore(!showMore);
-                  }}
-                >
+                <div className=" absolute top-6 bg-zinc-800 p-4 rounded-lg cursor-pointer flex flex-col gap-4">
                   <img
                     className=" min-w-4 min-h-4"
                     src="./assets/delete.svg"
+                    alt=""
+                    onClick={() => {
+                      deleteThread(thread._id);
+                      setShowMore(!showMore);
+                    }}
+                  />
+                  <img
+                    onClick={() => {
+                      setEditMode(true);
+                      setShowMore(!showMore);
+                    }}
+                    src="/assets/edit.svg"
                     alt=""
                   />
                 </div>
@@ -68,7 +98,8 @@ const Thread = ({ thread, like, comment, userId, deleteThread }) => {
             </div>
           }
         </div>
-        <div>{content[0]}</div>
+        <div>{content && content[0]}</div>
+
         <div className=" flex gap-3">
           <span
             className=" cursor-pointer flex  items-center"
@@ -87,13 +118,13 @@ const Thread = ({ thread, like, comment, userId, deleteThread }) => {
                 alt=""
               />
             </div>{" "}
-            {thread.likes.length}
+            {thread?.likes?.length}
           </span>
           <span className=" cursor-pointer flex items-center">
             <div className=" size-7 flex items-center">
               <img src="./assets/reply.svg" alt="" />{" "}
             </div>
-            {thread.comments.length}{" "}
+            {thread?.comments?.length}{" "}
           </span>
         </div>
       </div>

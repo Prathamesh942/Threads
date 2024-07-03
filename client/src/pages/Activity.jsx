@@ -18,7 +18,7 @@ const Activity = () => {
 
   return (
     <div className=" w-screen h-screen flex justify-center">
-      <div className=" w-[40%] h-screen bg-zinc-900 ">
+      <div className=" w-[40%] h-screen bg-zinc-900 max-md:w-[80vw]">
         <div className=" w-[100%] flex justify-between  border-b border-zinc-600 cursor-pointer">
           <span
             className={` flex justify-center flex-grow border-r border-zinc-600 cursor-pointer p-2 ${
@@ -58,7 +58,7 @@ const Activity = () => {
                 );
               })}
               {!activity.followersDetails?.length && (
-                <div className=" w-[100%] h-[100%] flex justify-center items-center">
+                <div className=" w-[100%] h-[100%] flex justify-center items-center h-[400px]">
                   <img
                     src="/assets/empty.png"
                     className=" w-[200px] h-[200px] aspect-square"

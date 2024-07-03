@@ -68,7 +68,7 @@ const Home = () => {
       )}
       <div className=" flex justify-center">
         <div className=" w-[100vw] rounded-2xl h-screen flex flex-col overflow-scroll fixed hide-scrollbar items-center">
-          <div className=" w-[40vw] flex flex-col bg-zinc-900  rounded-2xl pb-10 relative">
+          <div className=" w-[40vw] flex flex-col bg-zinc-900  rounded-2xl pb-10 relative max-md:w-[80vw]">
             {isLoggedIn && (
               <div className=" w-[100%]  px-6 border-b border-zinc-700 flex py-6 items-center sticky bg-zinc-900 top-0 rounded-md z-10">
                 <img

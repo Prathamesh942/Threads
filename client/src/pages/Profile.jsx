@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Thread from "../component/Thread";
 import { useAuth } from "../context/AuthContext";
 import Edit from "./Edit";
 
 const Profile = () => {
   const { isLoggedIn, logout, user: current } = useAuth();
+  const navigate = useNavigate();
   const { username } = useParams();
   const [user, setUser] = useState();
   const [thread, setThread] = useState();
@@ -47,6 +48,9 @@ const Profile = () => {
   };
 
   const follow = async () => {
+    if (!isLoggedIn) {
+      navigate("/auth");
+    }
     const res = await axios.post(`/api/v1/users/${user.username}/follow`);
     setFollowed(!followed);
   };
@@ -64,7 +68,7 @@ const Profile = () => {
         />
       )}
       <div className=" bg-zinc-950 w-screen h-screen flex justify-center items-center">
-        <div className=" w-[40vw] h-screen py-[6vh] bg-zinc-900 flex flex-col p-10">
+        <div className=" w-[40vw] h-screen py-[6vh] bg-zinc-900 flex flex-col p-10 max-md:w-[80vw] max-md:p-2">
           <div className="w-[100%] flex-1 border-b border-zinc-600 flex flex-col gap-6 pb-10">
             <div className=" flex w-[100%] justify-between flex-col">
               <div className=" flex flex-col gap-4 justify-center items-center">
@@ -76,8 +80,15 @@ const Profile = () => {
               </div>
               <div className=" flex flex-col gap-4 items-center">
                 <div className=" flex flex-col items-center">
-                  <h2 className=" text-lg font-medium">{user?.name}</h2>
-                  <span className=" text-zinc-300 font-light">
+                  <h2 className=" text-lg font-medium flex gap-1 items-center">
+                    {user?.name}
+                    {username == "prathamesh_94" ? (
+                      <img className=" size-5" src="./assets/verified.png" />
+                    ) : (
+                      <></>
+                    )}
+                  </h2>
+                  <span className=" text-zinc-300 font-light ">
                     {user?.username}
                   </span>
                 </div>

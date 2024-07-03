@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { Link } from "react-router-dom";
+import defaultImg from "../constant.js";
 
 const SingleThread = () => {
+  const navigate = useNavigate();
   const { isLoggedIn, logout, user } = useAuth();
   const twineId = useParams();
   const [thread, setThread] = useState();
@@ -39,6 +41,9 @@ const SingleThread = () => {
   };
 
   const makeReply = async () => {
+    if (!isLoggedIn) {
+      navigate("/auth");
+    }
     await axios.post(`/api/v1/posts/${thread?._id}/comments`, {
       content: reply,
     });
@@ -51,7 +56,7 @@ const SingleThread = () => {
   }, [twineId, liked]);
   return (
     <div className=" bg-zinc-950 w-[100%] flex justify-center items-center overflow-hidden">
-      <div className=" w-[40vw] min-h-screen py-[6vh] bg-zinc-900 flex flex-col p-10">
+      <div className=" w-[40vw] min-h-screen py-[6vh] bg-zinc-900 flex flex-col p-10 max-md:w-[80vw] max-md:p-2">
         <div>
           {thread?.content &&
             thread?.content.map((twine, index) => {
@@ -145,7 +150,7 @@ const SingleThread = () => {
         <div className=" px-6 py-8 flex flex-col gap-10">
           <div className="flex border-b border-t py-4 border-zinc-500 gap-4 flex-wrap w-[100%] justify-between items-center">
             <img
-              src={me?.profileImg}
+              src={me?.profileImg || defaultImg}
               alt=""
               className=" rounded-full w-10 h-10 object-cover"
             />
@@ -167,6 +172,7 @@ const SingleThread = () => {
           </div>
           <div className=" flex flex-col gap-4">
             {comments.map((reply) => {
+              console.log(me, reply);
               return (
                 <div className=" w-[100%] border-b-[1px] border-zinc-800 pb-4">
                   <div
@@ -216,7 +222,7 @@ const SingleThread = () => {
                         }
                       </div>
                     </div>
-                    {me?.data?.data?._id == reply?.user?.id && (
+                    {String(me._id) == String(reply?.user?._id) && (
                       <img
                         src="/assets/delete.svg"
                         onClick={async () => {

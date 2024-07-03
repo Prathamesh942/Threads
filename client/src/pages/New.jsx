@@ -95,7 +95,7 @@ const New = ({
 
   return (
     <div
-      className=" w-[100%] h-screen flex justify-center items-center gap-4   text-white flex-col bg-[rgba(0,0,0,0.7)] absolute top-0 z-10"
+      className=" w-[100%] h-[100%] flex justify-center items-center gap-4   text-white flex-col bg-[rgba(0,0,0,0.7)] absolute top-0 right-0 z-10 max-md:left-0 max-md:right-0"
       onClick={() => {
         close(false);
       }}
@@ -108,7 +108,7 @@ const New = ({
         New thread
       </h2>
       <div
-        className=" flex flex-col justify-center items-center w-[40vw] bg-zinc-800 p-8 rounded-2xl border border-zinc-700"
+        className=" flex flex-col justify-center items-center w-[40vw] bg-zinc-800 p-8 rounded-2xl border border-zinc-700 max-md:w-[80vw]"
         onClick={(e) => {
           e.stopPropagation();
         }}
@@ -139,7 +139,12 @@ const New = ({
 
             <h3
               className=" text-zinc-700 px-6"
-              onClick={() => setCount(count + 1)}
+              onClick={() => {
+                if (!thread[count - 1]) {
+                  return;
+                }
+                setCount(count + 1);
+              }}
             >
               Add to thread
             </h3>

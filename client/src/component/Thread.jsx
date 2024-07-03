@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import defaultImg from "../constant.js";
 import { Link } from "react-router-dom";
 import New from "../pages/New.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 const Thread = ({
   thread,
@@ -11,6 +12,7 @@ const Thread = ({
   deleteThread,
   updateThread,
 }) => {
+  const { isLoggedIn, logout, user: current } = useAuth();
   const profileImg = thread?.user?.profileImg || defaultImg;
   const username = thread?.user?.username;
   const content = thread?.content;
@@ -67,7 +69,7 @@ const Thread = ({
           </h2>
           {
             <div className=" flex flex-col relative items-center">
-              {thread?.user?._id == userId && (
+              {isLoggedIn && thread?.user?._id == userId && (
                 <img
                   className=" cursor-pointer"
                   src="./assets/more.svg"
@@ -125,12 +127,14 @@ const Thread = ({
             </div>{" "}
             {thread?.likes?.length}
           </span>
-          <span className=" cursor-pointer flex items-center">
-            <div className=" size-7 flex items-center">
-              <img src="./assets/reply.svg" alt="" />{" "}
-            </div>
-            {thread?.comments?.length}{" "}
-          </span>
+          <Link to={`/twine/${thread?._id}`}>
+            <span className=" cursor-pointer flex items-center">
+              <div className=" size-7 flex items-center">
+                <img src="./assets/reply.svg" alt="" />{" "}
+              </div>
+              {thread?.comments?.length}{" "}
+            </span>
+          </Link>
         </div>
       </div>
     </div>

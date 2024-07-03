@@ -5,3 +5,18 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    position: fixed;
+    flex-direction: row;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 100vh;
+    transform: translateY(-80px);
+  }
+}

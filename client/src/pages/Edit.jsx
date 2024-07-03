@@ -34,7 +34,7 @@ const Edit = ({ nameOld, usernameOld, bioOld, close }) => {
       onClick={() => {
         close(false);
       }}
-      className="flex justify-center items-center py-4 w-full bg-[rgba(0,0,0,0.7)] h-screen z-10 absolute flex-col gap-5"
+      className="flex justify-center items-center py-4 w-full bg-[rgba(0,0,0,0.7)] h-screen z-10 absolute flex-col gap-5 max-md:w-[100%]"
     >
       <h2
         onClick={(e) => {
@@ -47,7 +47,7 @@ const Edit = ({ nameOld, usernameOld, bioOld, close }) => {
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="flex flex-col justify-center items-center w-[40vw] bg-zinc-800 p-8 rounded-2xl border border-zinc-700 gap-5"
+        className="flex flex-col justify-center items-center w-[40vw] bg-zinc-800 p-8 rounded-2xl border border-zinc-700 gap-5 max-md:w-[80vw]"
       >
         <input
           className="bg-transparent outline-none w-full p-2"

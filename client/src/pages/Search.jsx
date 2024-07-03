@@ -18,7 +18,7 @@ const Search = () => {
   }, [username]);
   return (
     <div className=" w-screen h-screen flex justify-center">
-      <div className=" w-[40%] h-screen bg-zinc-900 ">
+      <div className=" w-[40%] h-screen bg-zinc-900 max-md:w-[80vw]">
         <div className=" w-[100%] flex p-4">
           <input
             type="text"

@@ -90,13 +90,13 @@ const Navbar = () => {
       {isLoggedIn ? (
         <button
           onClick={handleLogout}
-          className=" border rounded-lg rounded-lg px-2 py-1 text-white  max-md:hidden"
+          className=" border rounded-lg  px-2 py-1 text-white  max-md:hidden"
         >
           Log out
         </button>
       ) : (
         <Link to={"/auth"}>
-          <button className=" border rounded-lg rounded-lg px-2 py-1 text-white  max-md:hidden">
+          <button className=" border rounded-lg px-2 py-1 text-white  max-md:hidden">
             Log In
           </button>
         </Link>

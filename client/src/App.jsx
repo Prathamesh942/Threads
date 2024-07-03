@@ -12,7 +12,7 @@ import SingleThread from "./pages/SingleThread";
 import Activity from "./pages/Activity";
 import Search from "./pages/Search";
 
-axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = "https://threads-yff0.onrender.com";
 axios.defaults.withCredentials = true;
 
 const router = createBrowserRouter([

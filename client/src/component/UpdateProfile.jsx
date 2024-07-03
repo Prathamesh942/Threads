@@ -23,7 +23,7 @@ const UpdateProfile = () => {
     try {
       setLoading(true);
       const response = await axios.put(
-        `/api/v1/users/${user.username}`,
+        `/api/v1/users/${user?.username}`,
         formData,
         {
           headers: {

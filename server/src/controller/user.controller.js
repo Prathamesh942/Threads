@@ -3,6 +3,8 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "..//utils/cloudinary.js";
+import { Post } from "../models/post.model.js";
+import { Like } from "../models/like.model.js";
 
 const getuser = asyncHandler(async (req, res) => {
   const userId = req.params.userId;
@@ -110,4 +112,42 @@ const unfollowuser = asyncHandler(async (req, res) => {
 
   res.status(200).json(new ApiResponse(200, me, "unfollowed user"));
 });
-export { getuser, updateuser, followuser, unfollowuser };
+
+const getActivity = asyncHandler(async (req, res) => {
+  const followers = req.user.followers;
+  const followersDetails = await User.find(
+    {
+      _id: { $in: followers },
+    },
+    "username profileImage"
+  );
+
+  const posts = await Post.find({ user: req.user._id });
+  // console.log(posts);
+  const likeDetails = [];
+  for (const post of posts) {
+    for (const like of post.likes) {
+      const likee = await Like.findOne({ user: req.user._id, post: post._id })
+        .populate("user", "username profileImg")
+        .populate("post", "_id");
+      likeDetails.push(likee);
+    }
+  }
+  const likeDetailsSorted = likeDetails
+    .map((like) => ({
+      userId: like.user._id,
+      username: like.user.username,
+      profileImg: like.user.profileImg,
+      postId: like.post._id,
+      createdAt: like.createdAt,
+    }))
+    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, { followersDetails, likeDetailsSorted }, "Activity")
+    );
+});
+
+export { getuser, updateuser, followuser, unfollowuser, getActivity };

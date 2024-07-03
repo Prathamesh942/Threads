@@ -1,4 +1,5 @@
 import { Comment } from "../models/comment.model.js";
+import { Post } from "../models/post.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -29,12 +30,20 @@ const updateComment = asyncHandler(async (req, res) => {
 
 const deleteComment = asyncHandler(async (req, res) => {
   const commentId = req.params.commentId;
-
   const comment = await Comment.findById(commentId);
+  const post = await Post.findById(comment.post);
+
+  if (!post) {
+    throw new ApiError(404, "Post not found");
+  }
 
   if (!comment) {
     throw new ApiError(404, "comment not found");
   }
+  post.comments = post.comments.filter(
+    (id) => id.toString() !== comment._id.toString()
+  );
+  await post.save();
 
   await comment.deleteOne();
 

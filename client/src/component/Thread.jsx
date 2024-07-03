@@ -98,7 +98,9 @@ const Thread = ({
             </div>
           }
         </div>
-        <div>{content && content[0]}</div>
+        <Link to={`/twine/${thread?._id}`}>
+          <div className=" cursor-pointer">{content && content[0]}</div>
+        </Link>
 
         <div className=" flex gap-3">
           <span

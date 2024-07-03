@@ -11,7 +11,6 @@ const Edit = ({ nameOld, usernameOld, bioOld, close }) => {
       name,
       bio,
     });
-    console.log(res);
     close(false);
   };
 

@@ -15,12 +15,12 @@ const Navbar = () => {
     logout();
   };
   return (
-    <div className=" py-[5vh] flex flex-col justify-between  items-center h-screen w-[100px] fixed top-0 z-10">
+    <div className=" py-[5vh] flex flex-col justify-between  items-center h-screen w-[100px] fixed top-0 z-20">
       <Link to={"/"}>
         <div className=" size-14 cursor-pointer">
           <img
             className=" hover:scale-105"
-            src="./assets/twinelogo.png"
+            src="/assets/twinelogo.png"
             alt=""
           />
         </div>
@@ -28,14 +28,14 @@ const Navbar = () => {
       <ul className=" flex flex-col gap-[4vh] max-h-[400px] justify-center items-center">
         <Link to={"/"}>
           <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
-            <img src="./assets/home.svg" alt="" />
+            <img src="/assets/home.svg" alt="" />
           </li>
         </Link>
         <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
-          <img src="./assets/search.svg" alt="" />
+          <img src="/assets/search.svg" alt="" />
         </li>
         <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
-          <img src="./assets/heart.svg" alt="" />
+          <img src="/assets/heart.svg" alt="" />
         </li>
         <Link to={`/${user?.data?.data?.username}`}>
           <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">

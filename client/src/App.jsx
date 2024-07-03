@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
@@ -8,6 +8,7 @@ import UpdateProfile from "./component/UpdateProfile";
 import New from "./pages/New";
 import Layout from "./component/Layout";
 import Profile from "./pages/Profile";
+import SingleThread from "./pages/SingleThread";
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/:username",
         element: <Profile />,
+      },
+      {
+        path: "/twine/:threadId",
+        element: <SingleThread />,
       },
     ],
   },

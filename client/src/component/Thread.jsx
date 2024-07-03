@@ -28,6 +28,7 @@ const Thread = ({
     }
     setLiked(false);
   });
+  console.log(thread);
 
   if (editMode) {
     return (
@@ -61,6 +62,9 @@ const Thread = ({
             ) : (
               <></>
             )}
+            <span className=" font-light text-zinc-400">
+              · {formatDate(thread?.updatedAt)}
+            </span>
           </h2>
           {
             <div className=" flex flex-col relative items-center">
@@ -134,4 +138,24 @@ const Thread = ({
   );
 };
 
+function formatDate(dateString) {
+  const inputDate = new Date(dateString);
+  const currentDate = new Date();
+  const timeDifference = currentDate - inputDate;
+  const oneDay = 24 * 60 * 60 * 1000; // milliseconds in one day
+
+  if (timeDifference > oneDay) {
+    // More than 24 hours old, return date and month
+    const day = inputDate.getDate();
+    const month = inputDate.toLocaleString("default", { month: "short" }); // e.g., 'Jul'
+    return `${day} ${month}`;
+  } else {
+    // Within the last 24 hours, return hours and minutes past
+    const hours = Math.floor(timeDifference / (1000 * 60 * 60));
+    const minutes = Math.floor(
+      (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
+    );
+    return `${hours} h`;
+  }
+}
 export default Thread;

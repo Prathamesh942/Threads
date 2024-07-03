@@ -31,7 +31,6 @@ const updateuser = asyncHandler(async (req, res) => {
 
   console.log(userId);
   if (req.files?.profile) {
-    // console.log(req.files.profile);
     const profileLocalPath = req.files?.profile[0].path;
     const profileImg = await uploadOnCloudinary(profileLocalPath);
     console.log(profileImg);

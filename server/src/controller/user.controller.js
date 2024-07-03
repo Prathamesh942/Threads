@@ -119,15 +119,16 @@ const getActivity = asyncHandler(async (req, res) => {
     {
       _id: { $in: followers },
     },
-    "username profileImage"
+    "username profileImg"
   );
 
   const posts = await Post.find({ user: req.user._id });
-  // console.log(posts);
+  // console.log("posts are", posts);
   const likeDetails = [];
   for (const post of posts) {
     for (const like of post.likes) {
-      const likee = await Like.findOne({ user: req.user._id, post: post._id })
+      console.log(like, post._id);
+      const likee = await Like.findOne({ user: like, post: post._id })
         .populate("user", "username profileImg")
         .populate("post", "_id");
       likeDetails.push(likee);
@@ -150,4 +151,24 @@ const getActivity = asyncHandler(async (req, res) => {
     );
 });
 
-export { getuser, updateuser, followuser, unfollowuser, getActivity };
+const searchUser = asyncHandler(async (req, res) => {
+  const username = req.params.username;
+  const result = await User.find(
+    { username: { $regex: username, $options: "i" } },
+    { username: 1, profileImg: 1 }
+  );
+  console.log(result);
+  if (!result) {
+    throw new ApiError(404, "user not found");
+  }
+  res.status(200).json(new ApiResponse(200, result, "user"));
+});
+
+export {
+  getuser,
+  updateuser,
+  followuser,
+  unfollowuser,
+  getActivity,
+  searchUser,
+};

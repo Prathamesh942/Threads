@@ -28,7 +28,6 @@ const Thread = ({
     }
     setLiked(false);
   });
-  console.log(thread);
 
   if (editMode) {
     return (
@@ -63,7 +62,7 @@ const Thread = ({
               <></>
             )}
             <span className=" font-light text-zinc-400">
-              · {formatDate(thread?.updatedAt)}
+              · {formatDate(thread?.createdAt)}
             </span>
           </h2>
           {
@@ -150,12 +149,21 @@ function formatDate(dateString) {
     const month = inputDate.toLocaleString("default", { month: "short" }); // e.g., 'Jul'
     return `${day} ${month}`;
   } else {
-    // Within the last 24 hours, return hours and minutes past
+    // Within the last 24 hours
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
     const minutes = Math.floor(
       (timeDifference % (1000 * 60 * 60)) / (1000 * 60)
     );
-    return `${hours} h`;
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    if (hours > 0) {
+      return `${hours} h`;
+    } else if (minutes > 0) {
+      return `${minutes} mins`;
+    } else {
+      return `${seconds} secs`;
+    }
   }
 }
+
 export default Thread;

@@ -9,6 +9,8 @@ import New from "./pages/New";
 import Layout from "./component/Layout";
 import Profile from "./pages/Profile";
 import SingleThread from "./pages/SingleThread";
+import Activity from "./pages/Activity";
+import Search from "./pages/Search";
 
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: "/twine/:threadId",
         element: <SingleThread />,
+      },
+      {
+        path: "/activity",
+        element: <Activity />,
+      },
+      {
+        path: "/search",
+        element: <Search />,
       },
     ],
   },

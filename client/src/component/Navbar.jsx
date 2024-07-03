@@ -31,12 +31,18 @@ const Navbar = () => {
             <img src="/assets/home.svg" alt="" />
           </li>
         </Link>
-        <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
-          <img src="/assets/search.svg" alt="" />
-        </li>
-        <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
-          <img src="/assets/heart.svg" alt="" />
-        </li>
+        <Link to={"/search"}>
+          <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
+            <img src="/assets/search.svg" alt="" />
+          </li>
+        </Link>
+
+        <Link to={"activity"}>
+          <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
+            <img src="/assets/heart.svg" alt="" />
+          </li>
+        </Link>
+
         <Link to={`/${user?.data?.data?.username}`}>
           <li className=" hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
             <img

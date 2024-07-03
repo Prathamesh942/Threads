@@ -4,6 +4,7 @@ import { Post } from "../models/post.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
 import { Comment } from "../models/comment.model.js";
+import { Like } from "../models/like.model.js";
 
 const createPost = asyncHandler(async (req, res) => {
   const me = req.user;
@@ -157,11 +158,15 @@ const likeUnlikePost = asyncHandler(async (req, res) => {
 
   if (post.likes.includes(me._id)) {
     post.likes = post.likes.filter((id) => id.toString() !== me._id.toString());
+    const likee = await Like.findOne({ user: me._id, post: post._id });
+    await likee.deleteOne();
     await post.save();
   } else {
     post.likes.push(me._id);
+    const like = Like.create({ user: me._id, post: post._id });
     await post.save();
   }
+  console.log(post);
 
   return res.status(200).json(new ApiResponse(200, post, "post liked"));
 });

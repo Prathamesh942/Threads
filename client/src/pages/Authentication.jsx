@@ -120,8 +120,8 @@ const Authentication = () => {
     <div className="w-screen h-screen bg-zinc-950 text-white flex justify-center items-center">
       <img
         className="absolute top-0 h-auto object-contain twinebg"
-        src="./assets/Twine.png"
-        srcSet="./assets/twinemobile.png 500w, ./assets/Twine.png 1200w"
+        src="/assets/Twine.png"
+        srcSet="/assets/twinemobile.png 700w, /assets/Twine.png 1200w"
         alt=""
       />
       <div className="w-[40%] min-w-[300px] max-w-[400px] flex flex-col justify-center items-center gap-6 z-10">

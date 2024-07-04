@@ -98,7 +98,7 @@ const New = ({
 
   const postThread = async () => {
     const formData = new FormData();
-    formData.append("content", JSON.stringify(thread));
+    formData.append("content", thread);
     if (image) {
       formData.append("image", image);
     }

@@ -184,7 +184,7 @@ const SingleThread = () => {
                     <div className=" min-w-10 flex flex-col items-center">
                       <img
                         className=" w-10 h-10 object-cover rounded-full"
-                        src={reply?.user?.profileImg}
+                        src={reply?.user?.profileImg || defaultImg}
                         alt=""
                       />
                       <div className=" h-[100%] bg-zinc-500 w-[1px] rounded-full"></div>

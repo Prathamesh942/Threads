@@ -91,7 +91,7 @@ const SingleThread = () => {
                           >
                             {thread?.user?.username}
                           </Link>
-                          {user?.username == "prathamesh_94" ? (
+                          {thread?.user?.username == "prathamesh_94" ? (
                             <img
                               className=" size-5"
                               src="/assets/verified.png"

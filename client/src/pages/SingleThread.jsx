@@ -91,7 +91,7 @@ const SingleThread = () => {
                           >
                             {thread?.user?.username}
                           </Link>
-                          {thread?.user?.username == "prathamesh_94" ? (
+                          {user?.username == "prathamesh_94" ? (
                             <img
                               className=" size-5"
                               src="/assets/verified.png"
@@ -202,7 +202,7 @@ const SingleThread = () => {
                             className="cursor-pointer"
                           >
                             {reply?.user?.username}
-                            {user?.username == "prathamesh_94" ? (
+                            {reply?.user?.username == "prathamesh_94" ? (
                               <img
                                 className=" size-5"
                                 src="/assets/verified.png"

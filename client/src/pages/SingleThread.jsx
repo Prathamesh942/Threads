@@ -43,6 +43,7 @@ const SingleThread = () => {
   const makeReply = async () => {
     if (!isLoggedIn) {
       navigate("/auth");
+      return;
     }
     await axios.post(`/api/v1/posts/${thread?._id}/comments`, {
       content: reply,

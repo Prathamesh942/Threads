@@ -115,6 +115,10 @@ const Thread = ({
               if (!userId) {
                 return;
               }
+              if (!isLoggedIn) {
+                navigate("/auth");
+                return;
+              }
               setLiked(!liked);
               like(thread._id);
             }}

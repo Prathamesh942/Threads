@@ -57,7 +57,7 @@ const Activity = () => {
                   </div>
                 );
               })}
-              {!activity.followersDetails?.length && (
+              {!activity?.followersDetails?.length && (
                 <div className=" w-[100%]  flex justify-center items-center h-[400px]">
                   <img
                     src="/assets/empty.png"

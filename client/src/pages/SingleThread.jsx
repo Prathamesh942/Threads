@@ -199,7 +199,7 @@ const SingleThread = () => {
                         <h2 className=" flex items-center gap-1 text-zinc-300">
                           <Link
                             to={`/${reply?.user?.username}`}
-                            className="cursor-pointer"
+                            className="cursor-pointer flex gap-1"
                           >
                             {reply?.user?.username}
                             {reply?.user?.username == "prathamesh_94" ? (

@@ -150,7 +150,7 @@ const SingleThread = () => {
         </div>
 
         <div className=" px-6 py-8 flex flex-col gap-10">
-          <div className="flex border-b border-t py-4 border-zinc-500 gap-4 flex-wrap w-[100%] justify-between items-center">
+          <div className="flex border-b border-t py-4 border-zinc-500 gap-4  w-[100%] justify-between items-center">
             <img
               src={me?.profileImg || defaultImg}
               alt=""
@@ -201,20 +201,12 @@ const SingleThread = () => {
                             {user?.username == "prathamesh_94" ? (
                               <img
                                 className=" size-5"
-                                src="./assets/verified.png"
+                                src="/assets/verified.png"
                               />
                             ) : (
                               <></>
                             )}
                           </Link>
-                          {user?.username == "prathamesh_94" ? (
-                            <img
-                              className=" size-5"
-                              src="./assets/verified.png"
-                            />
-                          ) : (
-                            <></>
-                          )}
                         </h2>
                         {
                           <div className=" flex flex-col relative items-center">

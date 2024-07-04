@@ -82,13 +82,17 @@ const New = ({
 }) => {
   const [thread, setThread] = useState(threadOld);
   const [count, setCount] = useState(countOld);
+  const [loading, setLoading] = useState(false);
 
   const postThread = async () => {
     try {
+      setLoading(true);
       const response = await axios.post("api/v1/posts", { content: thread });
+      setLoading(false);
       close(false);
       getPosts();
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -161,7 +165,16 @@ const New = ({
               Save
             </button>
           ) : (
-            <button onClick={postThread}>Post</button>
+            <button onClick={postThread}>
+              {loading ? (
+                <img
+                  className="size-6"
+                  src="https://media.tenor.com/I6kN-6X7nhAAAAAi/loading-buffering.gif"
+                />
+              ) : (
+                <span>Post</span>
+              )}
+            </button>
           )}
         </div>
       </div>

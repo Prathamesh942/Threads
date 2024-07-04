@@ -36,6 +36,7 @@ const UpdateProfile = () => {
       navigate("/");
       console.log(response.data);
     } catch (error) {
+      setLoading(false);
       console.error("Error uploading profile image:", error);
     }
   };
@@ -79,9 +80,25 @@ const UpdateProfile = () => {
             onChange={(e) => setBio(e.target.value)}
           ></textarea>
           <button className=" w-[100%] py-4 px-4 rounded-lg  bg-white text-zinc-700 font-medium">
-            Save
+            {loading ? (
+              <img
+                className="size-6"
+                src="https://media.tenor.com/I6kN-6X7nhAAAAAi/loading-buffering.gif"
+              />
+            ) : (
+              <span>Save</span>
+            )}
           </button>
-          <button className=" text-center">Skip</button>
+          <button className=" text-center">
+            {loading ? (
+              <img
+                className="size-6"
+                src="https://media.tenor.com/I6kN-6X7nhAAAAAi/loading-buffering.gif"
+              />
+            ) : (
+              <span>Skip</span>
+            )}
+          </button>
         </form>
       </div>
     </div>

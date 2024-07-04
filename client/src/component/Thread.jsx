@@ -69,7 +69,7 @@ const Thread = ({
           </h2>
           {
             <div className=" flex flex-col relative items-center">
-              {isLoggedIn && thread?.user?._id == userId && (
+              {isLoggedIn && String(thread?.user?._id) == String(userId) && (
                 <img
                   className=" cursor-pointer"
                   src="./assets/more.svg"

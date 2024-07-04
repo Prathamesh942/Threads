@@ -13,14 +13,10 @@ const Profile = () => {
   const [thread, setThread] = useState();
   const [followed, setFollowed] = useState(false);
   const [update, setUpdate] = useState(false);
-  const [current, setCurrent] = useState(
-    JSON.parse(localStorage.getItem("twineuser"))?.data?.data
-  );
+
   const fetchUser = async () => {
     const response = await axios.get(`/api/v1/users/${username}`);
     setUser(response.data.data);
-    const me = await JSON.parse(localStorage.getItem("twineuser"))?.data?.data;
-    setCurrent(me);
     try {
       const response = await axios.get(`/api/v1/posts/${username}/posts`);
 
@@ -63,7 +59,6 @@ const Profile = () => {
     fetchUser();
   }, [followed, update, username]);
 
-  console.log(current);
   return (
     <>
       {update && (
@@ -108,7 +103,7 @@ const Profile = () => {
                   <div className=" flex gap-1">
                     <span>{user?.followers.length}</span> followers
                   </div>
-                  {current?.data?.data?.username == username ? (
+                  {me?.username == username ? (
                     <button
                       className=" bg-zinc-800 text-white rounded-lg py-2 px-4 flex justify-center items-center"
                       onClick={() => {
@@ -120,13 +115,13 @@ const Profile = () => {
                   ) : (
                     <button
                       className={`${
-                        user?.followers?.includes(current?.data?.data?._id)
+                        user?.followers?.includes(me?._id)
                           ? "bg-zinc-800 text-white"
                           : "bg-white w-[40%]"
                       } text-black rounded-lg py-2 px-4 flex justify-center items-center`}
                       onClick={follow}
                     >
-                      {user?.followers?.includes(current?.data?.data?._id)
+                      {user?.followers?.includes(me?._id)
                         ? "Unfollow"
                         : "Follow"}
                     </button>
@@ -143,7 +138,7 @@ const Profile = () => {
                   thread={thread}
                   like={makeLike}
                   comment={makeComment}
-                  userId={me?.data?.data?._id}
+                  userId={me?._id}
                   deleteThread={deleteThread}
                 />
               );

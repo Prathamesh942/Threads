@@ -6,10 +6,7 @@ import defaultImg from "../constant.js";
 import "../App.css";
 
 const Navbar = () => {
-  const { isLoggedIn, logout } = useAuth();
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("twineuser"))?.data?.data
-  );
+  const { isLoggedIn, logout, user } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -26,9 +23,7 @@ const Navbar = () => {
     setMenuOpen(!menuOpen);
   };
 
-  useEffect(() => {
-    setUser(JSON.parse(localStorage.getItem("twineuser"))?.data?.data);
-  }, []);
+  console.log(user);
 
   return (
     <div className="py-[5vh] flex flex-col justify-between items-center h-screen w-[100px] fixed top-0 z-20 max-md:flex-row max-md:h-[60px] max-md:w-[100%] max-md:px-[6vw] max-md:bg-zinc-900 max-md:top-auto max-md:bottom-0 max-md:py-0">
@@ -55,13 +50,13 @@ const Navbar = () => {
             </li>
           </Link>
         )}
-        {user?.data?.data && (
-          <Link to={`/${user?.data?.data?.username}`}>
+        {user && (
+          <Link to={`/${user?.username}`}>
             {isLoggedIn && (
               <li className="hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
                 <img
                   className="rounded-full size-8 object-cover"
-                  src={user?.data?.data?.profileImg || defaultImg}
+                  src={user?.profileImg || defaultImg}
                   alt=""
                 />
               </li>

@@ -6,10 +6,11 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("twineuser"))?.data?.data
-  );
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("twineuser");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+  const [isLoggedIn, setIsLoggedIn] = useState(!!user);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -20,11 +21,13 @@ export const AuthProvider = ({ children }) => {
         if (response.data.loggedIn) {
           setIsLoggedIn(true);
           const storedUser = localStorage.getItem("twineuser");
-          const parsedUser = JSON.parse(storedUser);
-          setUser(
-            await axios.get(`/api/v1/users/${parsedUser.username}
-`)
-          );
+          if (storedUser) {
+            const parsedUser = JSON.parse(storedUser);
+            const userResponse = await axios.get(
+              `/api/v1/users/${parsedUser.username}`
+            );
+            setUser(userResponse.data);
+          }
         } else {
           setIsLoggedIn(false);
           setUser(null);
@@ -35,8 +38,9 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
       }
     };
+
     checkAuth();
-  }, [isLoggedIn]);
+  }, []);
 
   const login = (userData) => {
     setIsLoggedIn(true);

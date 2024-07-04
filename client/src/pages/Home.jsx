@@ -60,9 +60,9 @@ const Home = () => {
     <div className=" bg-zinc-950 w-[100%] text-white py-[5vh] min-h-screen">
       {newPost && (
         <New
-          username={user.data.data.username}
+          username={user?.username}
           close={setNewPost}
-          profileImg={user.data.data.profileImg || defaultImg}
+          profileImg={user?.profileImg || defaultImg}
           getPosts={getPosts}
         />
       )}
@@ -73,7 +73,7 @@ const Home = () => {
               <div className=" w-[100%]  px-6 border-b border-zinc-700 flex py-6 items-center sticky bg-zinc-900 top-0 rounded-md z-10">
                 <img
                   className=" w-10 h-10 object-cover rounded-full"
-                  src={user?.data?.data?.profileImg || defaultImg}
+                  src={user?.profileImg || defaultImg}
                   alt=""
                 />
                 <div
@@ -93,7 +93,7 @@ const Home = () => {
                   thread={thread}
                   like={makeLike}
                   comment={makeComment}
-                  userId={user?.data?.data?._id}
+                  userId={user?._id}
                   deleteThread={deleteThread}
                   updateThread={updateThread}
                 />

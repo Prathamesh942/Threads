@@ -104,7 +104,7 @@ const Thread = ({
           }
         </div>
         <Link to={`/twine/${thread?._id}`}>
-          <img src={thread?.image}></img>
+          <img src={thread?.image} className=" pb-4"></img>
           <div className=" cursor-pointer">{content && content[0]}</div>
         </Link>
 

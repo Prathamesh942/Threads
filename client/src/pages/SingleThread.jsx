@@ -58,6 +58,7 @@ const SingleThread = () => {
     <div className=" bg-zinc-950 w-[100%] flex justify-center items-center overflow-hidden">
       <div className=" w-[40vw] min-h-screen py-[6vh] bg-zinc-900 flex flex-col p-10 max-md:w-[80vw] max-md:p-2">
         <div>
+          <img src={thread?.image} className=" pb-4"></img>
           {thread?.content &&
             thread?.content.map((twine, index) => {
               return (

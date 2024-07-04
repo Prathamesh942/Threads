@@ -48,17 +48,19 @@ const Navbar = () => {
             </li>
           </Link>
         )}
-        <Link to={`/${user?.data?.data?.username}`}>
-          {isLoggedIn && (
-            <li className="hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
-              <img
-                className="rounded-full size-8 object-cover"
-                src={user?.data?.data?.profileImg || defaultImg}
-                alt=""
-              />
-            </li>
-          )}
-        </Link>
+        {user?.data?.data && (
+          <Link to={`/${user?.data?.data?.username}`}>
+            {isLoggedIn && (
+              <li className="hover:bg-zinc-900 p-2 rounded-lg cursor-pointer">
+                <img
+                  className="rounded-full size-8 object-cover"
+                  src={user?.data?.data?.profileImg || defaultImg}
+                  alt=""
+                />
+              </li>
+            )}
+          </Link>
+        )}
       </ul>
 
       <button

@@ -77,7 +77,7 @@ const updatePost = asyncHandler(async (req, res) => {
     const profileLocalPath = req.files?.image[0].path;
     const profileImg = await uploadOnCloudinary(profileLocalPath);
     console.log(profileImg);
-    updates.image = profileImg.url;
+    post.image = profileImg.url;
   }
 
   post.content = updates.content;

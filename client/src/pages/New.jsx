@@ -190,7 +190,7 @@ const New = ({
           {update ? (
             <button
               onClick={() => {
-                updateThread(threadId, thread);
+                updateThread(threadId, thread, image);
                 close(false);
               }}
             >

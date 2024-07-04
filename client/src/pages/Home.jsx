@@ -43,9 +43,17 @@ const Home = () => {
     );
   };
 
-  const updateThread = async (threadId, content) => {
+  const updateThread = async (threadId, content, image) => {
     try {
-      await axios.put(`/api/v1/posts/${threadId}`, { content });
+      await axios.put(
+        `/api/v1/posts/${threadId}`,
+        { content, image },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       const response = await axios.get("/api/v1/posts");
       setThread(response.data.data.posts);
     } catch (error) {

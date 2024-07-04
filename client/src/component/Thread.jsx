@@ -45,7 +45,6 @@ const Thread = ({
       />
     );
   }
-  console.log(thread?.user?._id, userId);
   return (
     <div className=" w-[100%]  px-6 border-b border-zinc-700 flex py-6">
       <img

@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
             const userResponse = await axios.get(
               `/api/v1/users/${parsedUser.username}`
             );
-            setUser(userResponse.data);
+            setUser(userResponse.data.data);
           }
         } else {
           setIsLoggedIn(false);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,7 +6,10 @@ import defaultImg from "../constant.js";
 import "../App.css";
 
 const Navbar = () => {
-  const { isLoggedIn, logout, user } = useAuth();
+  const { isLoggedIn, logout } = useAuth();
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("twineuser"))?.data?.data
+  );
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -22,6 +25,10 @@ const Navbar = () => {
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("twineuser"))?.data?.data);
+  }, []);
 
   return (
     <div className="py-[5vh] flex flex-col justify-between items-center h-screen w-[100px] fixed top-0 z-20 max-md:flex-row max-md:h-[60px] max-md:w-[100%] max-md:px-[6vw] max-md:bg-zinc-900 max-md:top-auto max-md:bottom-0 max-md:py-0">

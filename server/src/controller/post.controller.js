@@ -5,14 +5,24 @@ import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
 import { Comment } from "../models/comment.model.js";
 import { Like } from "../models/like.model.js";
+import { uploadOnCloudinary } from "..//utils/cloudinary.js";
 
 const createPost = asyncHandler(async (req, res) => {
   const me = req.user;
   const { content } = req.body;
+  let postImg = null;
+
+  if (req.files?.image) {
+    const profileLocalPath = req.files?.image[0].path;
+    const profileImg = await uploadOnCloudinary(profileLocalPath);
+    console.log(profileImg);
+    postImg = profileImg.url;
+  }
 
   const post = await Post.create({
     user: me._id,
     content,
+    image: postImg,
   });
 
   if (!post) {
@@ -59,10 +69,17 @@ const updatePost = asyncHandler(async (req, res) => {
   const postId = req.params.postId;
   const updates = req.body;
   const post = await Post.findById(postId);
-  console.log(me, post.user);
   if (!me._id.equals(post.user)) {
     throw new ApiError(401, "unauthorized");
   }
+
+  if (req.files?.image) {
+    const profileLocalPath = req.files?.image[0].path;
+    const profileImg = await uploadOnCloudinary(profileLocalPath);
+    console.log(profileImg);
+    updates.image = profileImg.url;
+  }
+
   post.content = updates.content;
   post.save();
   res.status(200).json(new ApiResponse(200, post, "Post updated"));

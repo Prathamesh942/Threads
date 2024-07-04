@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { verifyJwt } from "../middlewares/auth.middleware.js";
+import { upload } from "../middlewares/multer.middleware.js";
 
 import {
   createPost,
@@ -16,10 +17,14 @@ import {
 
 const router = Router();
 
-router.route("/").post(verifyJwt, createPost);
+router
+  .route("/")
+  .post(verifyJwt, upload.fields([{ name: "image", maxCount: 1 }]), createPost);
 router.route("/").get(getPosts);
 router.route("/:postId").get(getPost);
-router.route("/:postId").put(verifyJwt, updatePost);
+router
+  .route("/:postId")
+  .put(verifyJwt, upload.fields([{ name: "image", maxCount: 1 }]), updatePost);
 router.route("/:postId").delete(verifyJwt, deletePost);
 router.route("/:username/posts").get(getUserPosts);
 router.route("/:postId/comments").post(verifyJwt, createComment);

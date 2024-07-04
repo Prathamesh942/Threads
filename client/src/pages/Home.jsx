@@ -98,6 +98,7 @@ const Home = () => {
                   userId={user?._id}
                   deleteThread={deleteThread}
                   updateThread={updateThread}
+                  postId={thread?._id}
                 />
               );
             })}

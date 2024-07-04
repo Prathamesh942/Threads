@@ -105,11 +105,15 @@ const New = ({
 
     try {
       setLoading(true);
-      const response = await axios.post("/api/v1/posts", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "/api/v1/posts",
+        { content: thread, image },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       setLoading(false);
       close(false);
       getPosts();

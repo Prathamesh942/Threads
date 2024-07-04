@@ -222,7 +222,7 @@ const SingleThread = () => {
                         }
                       </div>
                     </div>
-                    {String(me._id) == String(reply?.user?._id) && (
+                    {String(me?._id) == String(reply?.user?._id) && (
                       <img
                         src="/assets/delete.svg"
                         onClick={async () => {

@@ -194,9 +194,17 @@ const SingleThread = () => {
                         <h2 className=" flex items-center gap-1 text-zinc-300">
                           <Link
                             to={`/${reply?.user?.username}`}
-                            className="cursor-pointer"
+                            className="cursor-pointer gap-1"
                           >
                             {reply?.user?.username}
+                            {username == "prathamesh_94" ? (
+                              <img
+                                className=" size-5"
+                                src="./assets/verified.png"
+                              />
+                            ) : (
+                              <></>
+                            )}
                           </Link>
                           {user?.username == "prathamesh_94" ? (
                             <img

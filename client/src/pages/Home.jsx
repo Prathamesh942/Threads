@@ -59,7 +59,7 @@ const Home = () => {
 
   console.log(user);
   return (
-    <div className=" bg-zinc-950 w-[100%] text-white py-[5vh] min-h-screen">
+    <div className=" bg-zinc-950 w-[100%] text-white py-[5vh] min-h-screen max-md:py-0">
       {newPost && (
         <New
           username={user?.username}

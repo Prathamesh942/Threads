@@ -6,16 +6,21 @@ import { useAuth } from "../context/AuthContext";
 import Edit from "./Edit";
 
 const Profile = () => {
-  const { isLoggedIn, logout, user: current } = useAuth();
+  const { isLoggedIn, logout, user: me } = useAuth();
   const navigate = useNavigate();
   const { username } = useParams();
   const [user, setUser] = useState();
   const [thread, setThread] = useState();
   const [followed, setFollowed] = useState(false);
   const [update, setUpdate] = useState(false);
+  const [current, setCurrent] = useState(
+    JSON.parse(localStorage.getItem("twineuser"))?.data?.data
+  );
   const fetchUser = async () => {
     const response = await axios.get(`/api/v1/users/${username}`);
     setUser(response.data.data);
+    const me = await JSON.parse(localStorage.getItem("twineuser"))?.data?.data;
+    setCurrent(me);
     try {
       const response = await axios.get(`/api/v1/posts/${username}/posts`);
 
@@ -57,6 +62,8 @@ const Profile = () => {
   useEffect(() => {
     fetchUser();
   }, [followed, update, username]);
+
+  console.log(current);
   return (
     <>
       {update && (
@@ -136,7 +143,7 @@ const Profile = () => {
                   thread={thread}
                   like={makeLike}
                   comment={makeComment}
-                  userId={user?._id}
+                  userId={me?.data?.data?._id}
                   deleteThread={deleteThread}
                 />
               );

@@ -79,7 +79,7 @@ const UpdateProfile = () => {
             placeholder="Add cool Bio"
             onChange={(e) => setBio(e.target.value)}
           ></textarea>
-          <button className=" w-[100%] py-4 px-4 rounded-lg  bg-white text-zinc-700 font-medium">
+          <button className=" w-[100%] py-4 px-4 rounded-lg  bg-white text-zinc-700 font-medium flex justify-center items-center">
             {loading ? (
               <img
                 className="size-6"

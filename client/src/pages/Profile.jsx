@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Thread from "../component/Thread";
 import { useAuth } from "../context/AuthContext";
 import Edit from "./Edit";
+import defaultImg from "../constant.js";
 
 const Profile = () => {
   const { isLoggedIn, logout, user: me } = useAuth();
@@ -76,7 +77,7 @@ const Profile = () => {
               <div className=" flex flex-col gap-4 justify-center items-center">
                 <img
                   className=" rounded-full w-[100px] h-[100px] min-w-[100px] min-h-[100px] object-cover"
-                  src={user?.profileImg}
+                  src={user?.profileImg || defaultImg}
                   alt=""
                 />
               </div>

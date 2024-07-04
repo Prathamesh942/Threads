@@ -70,7 +70,7 @@ const Profile = () => {
         />
       )}
       <div className=" bg-zinc-950 w-screen h-screen flex justify-center items-center">
-        <div className=" w-[40vw] h-screen py-[6vh] bg-zinc-900 flex flex-col p-10 max-md:w-[80vw] max-md:p-2">
+        <div className=" w-[40vw] h-screen py-[6vh] bg-zinc-900 flex flex-col p-10 max-md:w-[100vw] max-md:p-2">
           <div className="w-[100%] flex-1 border-b border-zinc-600 flex flex-col gap-6 pb-10">
             <div className=" flex w-[100%] justify-between flex-col">
               <div className=" flex flex-col gap-4 justify-center items-center">

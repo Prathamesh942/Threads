@@ -44,7 +44,7 @@ const Activity = () => {
         <div className=" p-2">
           {showFollowers ? (
             <div className=" flex flex-col gap-5 p-5">
-              {activity?.followersDetails.map((f) => {
+              {activity?.followersDetails?.map((f) => {
                 return (
                   <div>
                     <h4 className=" flex gap-2  items-center">

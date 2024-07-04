@@ -22,6 +22,10 @@ const Home = () => {
   };
 
   const makeLike = async (postId) => {
+    if (!isLoggedIn) {
+      navigate("/auth");
+      return;
+    }
     await axios.post(`/api/v1/posts/${postId}/likes`);
     const response = await axios.get(`/api/v1/posts/${postId}`);
     setThread((prevThread) =>

@@ -36,6 +36,10 @@ const SingleThread = () => {
   };
 
   const makeLike = async (postId) => {
+    if (!isLoggedIn) {
+      navigate("/auth");
+      return;
+    }
     const res = await axios.post(`/api/v1/posts/${thread?._id}/likes`);
     setLiked(!liked);
   };

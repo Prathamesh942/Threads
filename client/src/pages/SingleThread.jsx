@@ -89,7 +89,7 @@ const SingleThread = () => {
                           {user?.username == "prathamesh_94" ? (
                             <img
                               className=" size-5"
-                              src="./assets/verified.png"
+                              src="/assets/verified.png"
                             />
                           ) : (
                             <></>

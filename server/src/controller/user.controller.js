@@ -21,7 +21,7 @@ const getuser = asyncHandler(async (req, res) => {
 });
 
 const updateuser = asyncHandler(async (req, res) => {
-  const userId = req.user.username;
+  const userId = req.params.userId;
   const updates = req.body;
 
   if (updates.username) {

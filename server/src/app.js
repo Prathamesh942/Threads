@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "https://threads-zeta-peach.vercel.app",
+    origin: "https://twinesocial.vercel.app",
     credentials: true,
     exposedHeaders: ["Set-Cookie"],
   })
